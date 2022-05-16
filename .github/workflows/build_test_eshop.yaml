@@ -57,6 +57,17 @@ jobs:
         run: |
           npm rebuild node-sass --force
           npm run build -- --colors
+
+      - name: Cache node modules and build folder
+        if: ${{ github.ref =='refs/heads/master' }} # tohle rika, pokud je brench, ve ktere se nachazim master tak to proved a pokud neni tak to preskoc
+        uses: actions/cache@v3
+        with: 
+          path: |
+            ~/.npm
+            ./node_modules
+            ./build
+          key: ${{ runner.os }}-build-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-build-${{ github.run_id }}
 # End of build section
 
 # Test section
